@@ -9,7 +9,8 @@ status_check() {
     echo -e "\e[31mFAILURE\e[0m"
       echo "Refer Log File for more information, LOG - ${LOG}"
     exit
-}
+  fi
+ }
 
 echo -e "\e[35m Configuring NodeJS repos\e[0m"
 curl -sL https://rpm.nodesource.com/setup_lts.x | bash &>>${lOG}
