@@ -26,6 +26,7 @@ if [ $? -eq 0 ]; then
   echo SUCCESS
 else
   echo FAILURE
+  echo "Refer Log File for more information, LOG - ${LOG}"
   exit
 fi
 
@@ -126,7 +127,7 @@ if [ $? -eq 0 ]; then
   echo SUCCESS
 else
   echo FAILURE
-   exit
+    exit
 fi
 
 echo -e "\e[35m Load Schema\e[0m"
