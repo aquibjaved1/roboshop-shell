@@ -27,7 +27,7 @@ status_check() {
 
    print_head "Extracting App Content"
    cd /app
-   unzip /tmp/{component}.zip &>>${lOG}
+   unzip /tmp/{component}.zip
    status_check
 
    print_head "Installing NodeJS Dependencies"
