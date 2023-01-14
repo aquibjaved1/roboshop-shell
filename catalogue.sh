@@ -1,66 +1,66 @@
 source common.sh
 
 print_head "Configuring NodeJS repos"
-curl -sL https://rpm.nodesource.com/setup_lts.x | bash &>>${lOG}
+curl -sL https://rpm.nodesource.com/setup_lts.x | bash
 status_check
 
 print_head "Install NodeJS repos"
-yum install nodejs -y &>>${lOG}
+yum install nodejs -y
 status_check
 
 print_head "Add Application User"
-id roboshop &>>${lOG}
+id roboshop
 if [ $? -ne 0 ]; then
-  useradd roboshop &>>${lOG}
+  useradd roboshop
 fi
 
 status_check
 
-mkdir -p /app &>>${lOG}
+mkdir -p /app
 status_check
 
 print_head "Downloading App Content"
-curl -L -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue.zip &>>${lOG}
+curl -L -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue.zip
 status_check
 
 print_head "Clean up Old Content"
-rm -rf /app/* &>>${lOG}
+rm -rf /app/*
 status_check
 
 print_head "Extracting App Content"
 cd /app
-unzip /tmp/catalogue.zip &>>${lOG}
+unzip /tmp/catalogue.zip
 status_check
 
 print_head "Installing NodeJS Dependencies"
-cd /app &>>${lOG}
-npm install &>>${lOG}
+cd /app
+npm install
 status_check
 
 print_head "Configuring Catalogue Service File"
-cp ${script_location}/files/catalogue.service /etc/systemd/system/catalogue.service &>>${lOG}
+cp ${script_location}/files/catalogue.service /etc/systemd/system/catalogue.service
 status_check
 
 print_head "Reload SystemD"
-systemctl daemon-reload &>>${lOG}
+systemctl daemon-reload
 status_check
 
 print_head "Enable Catalogue Service"
-systemctl enable catalogue &>>${lOG}
+systemctl enable catalogue
 status_check
 
 print_head "Start Catalogue Service"
-systemctl start catalogue &>>${lOG}
+systemctl start catalogue
 status_check
 
 print_head "Configuring Mongo Repo"
-cp ${script_location/}/files/mongodb.repo /etc/yum.repos.d/mongodb.repo &>>${lOG}
+cp ${script_location/}/files/mongodb.repo /etc/yum.repos.d/mongodb.repo
 status_check
 
 print_head "Install Mongo Client"
-yum install mongodb-org-shell -y &>>${lOG}
+yum install mongodb-org-shell -y
 status_check
 
 print_head "Load Schema"
-mongo --host mongodb-dev.aquibdevops.online </app/schema/catalogue.js &>>${lOG}
+mongo --host mongodb-dev.aquibdevops.online </app/schema/catalogue.js
 status_check
