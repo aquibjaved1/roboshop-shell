@@ -18,7 +18,7 @@ status_check() {
 
  NODEJS() {
    print_head "Downloading App Content"
-   curl -L -o /tmp/${component}.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue.zip &>>${lOG}
+   curl -L -o /tmp/${component}.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue.zip
    status_check
 
    print_head "Clean up Old Content"
