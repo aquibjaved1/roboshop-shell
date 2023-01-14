@@ -22,7 +22,7 @@ status_check() {
    status_check
 
    print_head "Clean up Old Content"
-   rm -rf /app/* &>>${lOG}
+   rm -rf /app/*
    status_check
 
    print_head "Extracting App Content"
