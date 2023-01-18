@@ -69,15 +69,17 @@ NODEJS() {
   systemctl start ${component}
   status_check
 
-  print_head "Configuring Mongo Repo"
-  cp ${script_location/}/files/mongodb.repo /etc/yum.repos.d/mongodb.repo
-  status_check
+ if [ ${schema_load} == "true" ]; then
+   print_head "Configuring Mongo Repo"
+   cp ${script_location/}/files/mongodb.repo /etc/yum.repos.d/mongodb.repo
+   status_check
 
-  print_head "Install Mongo Client"
-  yum install mongodb-org-shell -y
-  status_check
+   print_head "Install Mongo Client"
+   yum install mongodb-org-shell -y
+   status_check
 
-  print_head "Load Schema"
-  mongo --host mongodb-dev.aquibdevops.online </app/schema/${component}.js
-  status_check
+    print_head "Load Schema"
+    mongo --host mongodb-dev.aquibdevops.online </app/schema/${component}.js
+    status_check
+ fi
 }
