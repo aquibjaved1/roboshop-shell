@@ -8,7 +8,7 @@ status_check() {
   else
     echo -e "\e[1;31mFAILURE\e[0m"
     echo "Refer Log File for more information, LOG - ${LOG}"
-    exit
+    exit 1
   fi
  }
 
@@ -17,8 +17,6 @@ status_check() {
  }
 
 NODEJS() {
-  source common.sh
-
   print_head "Configuring NodeJS repos"
   curl -sL https://rpm.nodesource.com/setup_lts.x | bash
   status_check
@@ -32,14 +30,13 @@ NODEJS() {
   if [ $? -ne 0 ]; then
     useradd roboshop
   fi
-
   status_check
 
   mkdir -p /app
   status_check
 
   print_head "Downloading App Content"
-  curl -L -o /tmp/${component}.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue.zip
+  curl -L -o /tmp/${component}.zip https://roboshop-artifacts.s3.amazonaws.com/${component}.zip
   status_check
 
   print_head "Clean up Old Content"
@@ -57,15 +54,15 @@ NODEJS() {
   status_check
 
   print_head "Configuring ${component} Service File"
-  cp ${script_location}/files/${component}.service /etc/systemd/system/catalogue.service
+  cp ${script_location}/files/${component}.service /etc/systemd/system/${component}.service
   status_check
 
   print_head "Reload SystemD"
   systemctl daemon-reload
   status_check
 
-  print_head "Enable Catalogue Service"
-  systemctl enable catalogue
+  print_head "Enable ${component} Service"
+  systemctl enable ${component}
   status_check
 
   print_head "Start ${component} Service"
